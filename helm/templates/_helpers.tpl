@@ -60,13 +60,3 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
-
-{{/*
-Generate certificates for heimdall webhook
-*/}}
-{{- define "heimdall.gen-certs" -}}
-{{- $altNames := list ( printf "%s.%s" (include "heimdall.name" .) .Release.Namespace ) ( printf "%s.%s.svc" (include "heimdall.name" .) .Release.Namespace ) -}}
-{{- $ca := genCA "heimdall-ca" 365 -}}
-{{- $cert := genSignedCert ( include "heimdall.name" . ) nil $altNames 365 $ca -}}
-{{- toYaml $cert -}}
-{{- end -}}

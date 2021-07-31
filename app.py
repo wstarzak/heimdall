@@ -21,6 +21,16 @@ def mutate():
     except KeyError:
         pass
     patch = jsonpatch.JsonPatch.from_diff(spec, modified_spec)
+    print(jsonify(
+        {
+            "response": {
+                "allowed": True,
+                "uid": request.json["request"]["uid"],
+                "patch": base64.b64encode(str(patch).encode()).decode(),
+                "patchtype": "JSONPatch",
+            }
+        }
+    ))
     return jsonify(
         {
             "response": {
