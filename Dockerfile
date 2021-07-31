@@ -10,4 +10,4 @@ RUN apk add --no-cache --virtual .build-deps gcc musl-dev \
 COPY app.py .
 USER app
 
-CMD [ "python", "./app.py" ]
+CMD [ "gunicorn", "--bind=0.0.0.0:443", "--certfile=/certs/tls.crt", "--keyfile=/certs/tls.key", "app:app"]
