@@ -3,6 +3,7 @@ import copy
 import http
 import json
 import random
+import logging
 
 import jsonpatch
 from flask import Flask, jsonify, request
@@ -47,6 +48,11 @@ def mutate():
 def health():
     return ("", http.HTTPStatus.NO_CONTENT)
 
+if __name__ != '__main__':
+    # if we are not running directly, we set the loggers
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=False)  # pragma: no cover
