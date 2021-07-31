@@ -41,10 +41,12 @@ spec:
             httpGet:
               path: /health
               port: https
+              scheme: HTTPS
           readinessProbe:
             httpGet:
               path: /health
               port: https
+              scheme: HTTPS
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
